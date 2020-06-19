@@ -21,7 +21,7 @@
 </template>
 
 <script>
-	import { settingNodeStatus } from '../../../api/device.js'
+	import { settingNodeStatus, queryNodeRealStatus } from '../../../api/device.js'
 	import mHeader from '../../../components/header.vue'
 	import deviceInfo from '../../../common/deviceInfo.js'
 	export default {
@@ -63,14 +63,14 @@
 			changeSwitchs(index) {//按钮事件
 				const tarArr = Object.assign([],this.switchsList, {[index]: !this.switchsList[index]})
 				this.settingStatus(this.dealSwitchs(tarArr), () => {
-					this.switchsList = tarArr
+					// this.switchsList = tarArr
 				})
 			},
 			changeSocket(index) {//插座事件
 				const sceneNum = Math.pow(2, index).toString(16)
 				const tarArr = Object.assign([],this.socketList, {[index]: !this.socketList[index]})
 				this.settingStatus(this.dealSocket(tarArr), () => {
-					this.socketList = tarArr
+					// this.socketList = tarArr
 				})
 			},
 			dealSwitchs(tarArr,sceneNum){//处理开关状态status
@@ -94,11 +94,43 @@
 				settingNodeStatus(this.serialId, status).then(res => {
 					fn && fn()
 					this.lock = false
-					uni.hideLoading()
+					setTimeout(() => {
+						this.getRealStatus()
+					}, 800)
 				}).catch(err => {
 					console.log('err settingStatus',err)
 					this.lock = false
 					uni.hideLoading()
+				})
+			},
+			getRealStatus(){//重新获取状态渲染按钮
+				queryNodeRealStatus(this.serialId).then(res => {
+					uni.hideLoading()
+					if(res.data && res.data.status) {
+						if(this.switchsList.length) { //处理按钮
+							let statusStr,switchsArr,switchsList=[];
+							if(this.screenList.length > 0) {
+								switchsArr = this.PrefixInteger(parseInt(res.data.status.slice(2,4),16).toString(2), this.screenList.length * 2);
+							} else {
+								switchsArr = this.PrefixInteger(parseInt(res.data.status.slice(0,2),16).toString(2), this.screenList.length * 2);
+							}
+							for (let i = 0; i < this.screenList.length; i++) {
+								switchsList[i] = switchsArr.substr(i*2, 2) === '01'
+							}
+							this.switchsList = switchsList
+						}
+						if(this.socketList.length) { //处理插座
+							let switchsArr,socketList=[];
+							switchsArr = this.PrefixInteger(parseInt(res.data.status.slice(0,2),16).toString(2), this.socketList.length * 1);
+							for (let i = 0; i < this.socketList.length; i++) {
+								socketList[i] = switchsArr[i] === '1'
+							}
+							this.socketList = socketList
+						}
+					}
+				}).catch(err => {
+					uni.hideLoading()
+					console.log('err', err)
 				})
 			},
 			PrefixInteger(num, length) {//凑长度为8字节
