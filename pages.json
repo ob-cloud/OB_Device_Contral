@@ -1,6 +1,12 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页,
 		{
+			"path": "pages/device/deviceControl/controlLamp",
+			"style": {
+				"navigationBarTitleText": "遥控灯管理",
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/device/deviceList",
 			"style": {
 				"navigationBarTitleText": "设备列表",
@@ -38,7 +44,7 @@
 		},  {
 			"path": "pages/device/deviceControl/lamp",
 			"style": {
-				"navigationBarTitleText": "单色灯管理",
+				"navigationBarTitleText": "LED色灯管理",
 				"navigationStyle": "custom"
 			}
 		},        

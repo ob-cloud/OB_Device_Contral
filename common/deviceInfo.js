@@ -1,3 +1,4 @@
+// 有关设备的配置
 export const deviceInfo = [{
 	id: 1,
 	name: 'LED灯/灯座/调光器',
