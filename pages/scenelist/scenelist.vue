@@ -23,7 +23,7 @@
 	</view>
 </template>
 <script>
-	import { getSceneList, controlScene } from '../../api/scene.js'
+	import { getSceneList, controlScene } from '@/api/scene.js'
 	import {
 		mapState,
 		mapActions

@@ -3,27 +3,27 @@
 		<m-header :title="title"></m-header>
 		<view class="img-infrared">
 			<!-- 红外 -->
-			<image v-for="(item, index) in infraredList" :key="index" :src="'../../../static/img/deviceImg/' + (item ? 'infrared.png' : 'infraredoff.png')" @click="changeInfrared(index)" :style="{width: '15vw', height: '10vw'}" class="infrared-img"></image>
+			<image v-for="(item, index) in infraredList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'infrared.png' : 'infraredoff.png')" @tap="changeInfrared(index)" :style="{width: '15vw', height: '10vw'}" class="infrared-img"></image>
 		</view>
 		<view class="img-scene">
 			<!-- 场景 -->
-			<image v-for="(item, index) in screenList" :key="index" :src="'../../../static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @click="changeScene(index)" :style="{width: '25vw', height: '25vw'}" class="switch-img"></image>
+			<image v-for="(item, index) in screenList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @tap="changeScene(index)" :style="{width: '25vw', height: '25vw'}" class="switch-img"></image>
 		</view>
 		<view class="img-box" v-if="socketList.length < 1">
 			<!-- 开关 -->
-			<image v-for="(item, index) in switchsList" :key="index" :src="'../../../static/img/deviceImg/' + (item ? 'Switchon.png' : 'Switchoff.png')" @click="changeSwitchs(index)" :style="{order: 100 - index, width: switchWidth, height: switchWidth}" class="switch-img"></image>
+			<image v-for="(item, index) in switchsList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'Switchon.png' : 'Switchoff.png')" @tap="changeSwitchs(index)" :style="{order: 100 - index, width: switchWidth, height: switchWidth}" class="switch-img"></image>
 		</view>
 		<view class="img-socket" v-else>
 			<!-- 插座2 -->
-			<image v-for="(item, index) in socketList" :key="index" :src="'../../../static/img/deviceImg/' + (item ? 'socketon.png' : 'socketoff.png')" @click="changeSocket(index)" :style="{order: 100 - index, width: '25vw', height: '25vw'}" class="switch-img"></image>
+			<image v-for="(item, index) in socketList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'socketon.png' : 'socketoff.png')" @tap="changeSocket(index)" :style="{order: 100 - index, width: '25vw', height: '25vw'}" class="switch-img"></image>
 		</view>
 	</view>
 </template>
 
 <script>
-	import { settingNodeStatus, queryNodeRealStatus } from '../../../api/device.js'
-	import mHeader from '../../../components/header.vue'
-	import deviceInfo from '../../../common/deviceInfo.js'
+	import { settingNodeStatus, queryNodeRealStatus } from '@/api/device.js'
+	import mHeader from '@/components/header.vue'
+	import deviceInfo from '@/common/deviceInfo.js'
 	export default {
 		components: {
 			mHeader

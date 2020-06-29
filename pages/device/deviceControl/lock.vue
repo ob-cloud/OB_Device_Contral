@@ -4,7 +4,7 @@
 		<view class="lock-box">
 			<view class="uni-list">
 				<view class="lock-img">
-					<img src="@/static/img/deviceImg/lock.png" style="width:40vw;height: 40vw;margin: 15px auto;" alt="">
+					<img src="/static/img/deviceImg/lock.png" style="width:40vw;height: 40vw;margin: 15px auto;" alt="">
 				</view>
 				<view class="uni-list-cell">
 					<view class="uni-list-cell-left">
@@ -43,9 +43,9 @@
 </template>
 
 <script>
-	import { addUserNoAuth } from '../../../api/device.js'
+	import { addUserNoAuth } from '@/api/device.js'
 	import dayjs from 'dayjs'
-	import mHeader from '../../../components/header.vue'
+	import mHeader from '@/components/header.vue'
 	export default {
 		components: {
 			mHeader

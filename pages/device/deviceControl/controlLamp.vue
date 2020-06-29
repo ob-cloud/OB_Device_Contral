@@ -34,9 +34,9 @@
 </template>
 
 <script>
-	import mHeader from '../../../components/header.vue'
-	import tColorPicker from '../../../components/t-color-picker/t-color-picker.vue'
-	import { settingNodeStatus, settingRemoteLed } from '../../../api/device.js'
+	import mHeader from '@/components/header.vue'
+	import tColorPicker from '@/components/t-color-picker/t-color-picker.vue'
+	import { settingNodeStatus, settingRemoteLed } from '@/api/device.js'
 	export default {
 		components: {
 			mHeader,

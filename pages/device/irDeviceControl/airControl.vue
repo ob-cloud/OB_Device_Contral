@@ -42,20 +42,10 @@
 						<text>风速</text>
 					</view>
 				</view>
-				<view class="warn-btn" v-if="['21','51','41'].indexOf(model) > -1">
+				<view class="warn-btn">
 					<view class="warm-btn" @tap="downWarm">-</view>
 					<text>温度</text>
 					<view class="warm-btn" @tap="upWarm">+</view>
-				</view>
-				<view class="top-btn">
-					<view class="wrap">
-						<image src="/static/img/deviceImg/columnContral.png" style="width:10vw; height: 10vw;" @tap="columnContral"></image>
-						<text>上下摆风</text>
-					</view>
-					<view class="wrap">
-						<image src="/static/img/deviceImg/rowControl.png" style="width:10vw; height: 10vw;" @tap="rowControl"></image>
-						<text>左右摆风</text>
-					</view>
 				</view>
 			</view>
 		</view>
@@ -159,12 +149,6 @@
 					num = '01'
 				} 
 				this.changeAir(`${this.model}${num}${this.temp}${this.upSwing}${this.leftSwing}0103`)
-			},
-			columnContral() {
-				this.changeAir(`${this.model}${this.speed}${this.temp}${this.upSwing !== '01' ? '01': '00'}${this.leftSwing}0103`)
-			},
-			rowControl() {
-				this.changeAir(`${this.model}${this.speed}${this.temp}${this.upSwing}${this.leftSwing !== '01' ? '01': '00'}0103`)
 			},
 			downWarm(){
 				const warmNum = parseInt(this.temp, 16) - 1

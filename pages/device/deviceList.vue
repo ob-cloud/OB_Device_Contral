@@ -6,13 +6,23 @@
 			</picker>
 		</uni-section>
 		<view class="example-body" v-if="deviceList.length">
-			<uni-grid :column="3" :highlight="true" @change="contralDevice">
-				<uni-grid-item v-for="(item, index) in deviceList" :index="index" :key="index" v-if="!array[selectIndex].value || item.obox_serial_id === array[selectIndex].value">
+			<uni-grid :column="3" :highlight="true">
+				<uni-grid-item v-for="(item, index) in deviceList" :index="index" :key="index" v-if="!array[selectIndex].value || item.obox_serial_id === array[selectIndex].value"  @tap="contralDevice(index)">
 					<view class="grid-item-box" style="background-color: #fff;">
-						<image :src="`../../static/img/deviceImg/` + getImageName(item) + '.png'">
+						<image :src="`/static/img/deviceImg/` + getImageName(item) + '.png'">
 						<text class="text">{{ item.name }}</text>
 						<text class="device-status">
 							{{getStatus(item)}}
+						</text>
+					</view>
+				</uni-grid-item>
+				<!-- 红外设备 -->
+				<uni-grid-item v-for="(item, index) in aliDev" :index="index" :key="item.deviceId" @tap="controlAliDev(item)">
+					<view class="grid-item-box" style="background-color: #fff;">
+						<image src="/static/img/deviceImg/infra_home.png">
+						<text class="text">{{ item.name }}</text>
+						<text class="device-status">
+							--
 						</text>
 					</view>
 				</uni-grid-item>
@@ -21,10 +31,10 @@
 	</view>
 </template>
 <script>
-	import { getDeviceList } from '../../api/device.js'
-	import { deviceInfo } from '../../common/deviceInfo.js'
-	import Suit from '../../common/suit.umd.js'
-	import { getDevicePath } from '../../common/deviceInfo.js'
+	import { getDeviceList ,queryAliDev } from '@/api/device.js'
+	import { deviceInfo } from '@/common/deviceInfo.js'
+	import Suit from '@/common/suit.umd.js'
+	import { getDevicePath } from '@/common/deviceInfo.js'
 	import {
 		mapState,
 		mapActions
@@ -52,15 +62,17 @@
 		data(){
 			return {
 				deviceList: [],
-				selectIndex: 0
+				selectIndex: 0,
+				aliDev: []
 			}
 		},
 		onLoad() {
 		},
 		onShow(){
 			if (this.hasLogin) { 
-				// 场景列表
+				// 设备列表，红外设备
 				this.getDeviceList()
+				this.getAliDev()
 				// 获取obox列表1
 				if(!this.oboxList.length) {
 					this.getOboxList()
@@ -105,7 +117,7 @@
 			bindPickerChange(e) {
 				this.selectIndex = e.target.value
 			},
-			// 新页面的功能
+			// 获取设备列表
 			getDeviceList(){
 				getDeviceList({}).then(res => {
 					if(res.status === 200 && res.data && res.data.config) {
@@ -117,6 +129,28 @@
 				}).catch(err => {
 					uni.stopPullDownRefresh();
 				})
+			},
+			getAliDev() {
+				queryAliDev().then(res => {
+					console.log('res', res)
+					if(res.data && res.data.configs) {
+						this.aliDev = res.data.configs
+					}
+				}).catch(err => {
+					console.log('err', err)
+				})
+			},
+			controlAliDev(item) {
+				uni.navigateTo({
+					url: `/pages/device/irDeviceList?deviceId=${item.deviceId}&name=${item.name}`,
+					fail: function(e) {
+						uni.showToast({
+							title: '功能开发中',
+							icon: 'none',
+							duration: 1000
+						});
+					}
+				});
 			},
 			getImageName(item) {
 				let tarImg = ''
@@ -133,18 +167,8 @@
 				})
 				return tarImg;
 			},
-			contralDevice(item) {
-				let tarObj = this.deviceList[item.detail.index]
-				console.log(`./deviceControl/${parseInt(tarObj.device_type, 16) + '' + parseInt(tarObj.device_child_type, 16)}?`)
-				// option = {
-				// 	serialId: '12345678',
-				// 	title: '测试u',
-				// 	status: '0205002100000000',
-				// 	switchsNum: 3, //按钮数
-				// 	sceneNum: 4, //场景数(包含特殊场景)
-				// 	infrared: 1 //红外-特殊场景
-				// }
-				console.log(getDevicePath(parseInt(tarObj.device_type, 16), parseInt(tarObj.device_child_type, 16)))
+			contralDevice(index) {
+				let tarObj = this.deviceList[index]
 				let url = `${getDevicePath(parseInt(tarObj.device_type, 16), parseInt(tarObj.device_child_type, 16))}&serialId=${tarObj.serialId}&status=${tarObj.state}&title=${tarObj.name}`
 				if(tarObj.obox_serial_id) {
 					url += `&obox_serial_id=${tarObj.obox_serial_id}`
@@ -174,6 +198,7 @@
 		onPullDownRefresh:function(){
 			if (this.hasLogin) { 
 				this.getDeviceList();
+				this.getAliDe()
 			}
 		},
  

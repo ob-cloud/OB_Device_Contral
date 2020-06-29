@@ -25,8 +25,8 @@
 </template>
 
 <script>
-	import mHeader from '../../../components/header.vue'
-	import { settingNodeStatus, queryNodeRealStatus } from '../../../api/device.js'
+	import mHeader from '@/components/header.vue'
+	import { settingNodeStatus, queryNodeRealStatus } from '@/api/device.js'
 	export default {
 		components: {
 			mHeader

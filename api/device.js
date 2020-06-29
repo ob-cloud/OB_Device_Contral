@@ -16,3 +16,9 @@ export function queryNodeRealStatus(serialId) {
 export function settingRemoteLed(obox_serial_id, serialId, status) {
  return post(`consumer/common?CMD=setting_remote_led&type=3&obox_serial_id=${obox_serial_id}&serialId=${serialId}&status=${status}`);  
 }
+export function queryAliDev() {
+ return post(`consumer/common?CMD=query_ali_dev`);  
+}
+export function queryIrDevice(serialId) {
+ return post(`consumer/common?CMD=query_ir_device&serialId=${serialId}`);  
+}

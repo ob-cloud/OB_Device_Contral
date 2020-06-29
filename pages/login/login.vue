@@ -1,7 +1,7 @@
 <template>
 	<view class="content" style="background: url(https://7465-te-651663-1257727594.tcb.qcloud.la/back2.png?sign=79bca63b8d2a84e564c9ed5ef2ce1909&t=1550568007) no-repeat center center;">
 		<m-header></m-header>
-		<image bindtap='navigatortap' style="width:40vw;height: 30vh;margin: 0 auto;" mode="aspectFit"  src="../../static/img/logo.png"></image>
+		<image bindtap='navigatortap' style="width:40vw;height: 30vh;margin: 0 auto;" mode="aspectFit"  src="/static/img/logo.png"></image>
 		<view class="input-group">
 			<view class="input-row border">
 				<text class="title">账号：</text>
@@ -20,18 +20,18 @@
 
 <script>
 	import request from '@/common/request.js';
-	import { login } from '../../api/global.js'
+	import { login } from '@/api/global.js'
 	import md5 from 'md5';
 	import btoa from 'btoa';
 	
-	import service from '../../service.js';
+	import service from '@/service.js';
 	import {
 		mapState,
 		mapMutations,
 		mapActions
 	} from 'vuex'
-	import mInput from '../../components/m-input.vue'
-	import mHeader from '../../components/header.vue'
+	import mInput from '@/components/m-input.vue'
+	import mHeader from '@/components/header.vue'
 
 	export default {
 		components: {
@@ -42,8 +42,8 @@
 			return {
 				providerList: [],
 				hasProvider: false,
-				account: '15989156711',//19925872332(Cloud),18970000001, 13650830713(Cloud), 15989156711(Cloud)
-				password: '12345678',
+				account: '15989156711',//18970000001, 19925872332(Cloud), 13650830713(Cloud), 15989156711(Cloud)
+				password: '28068198',
 				positionTop: 0,
 				isDevtools: false,
 				topHeight: 20,
