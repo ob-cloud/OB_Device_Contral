@@ -13,3 +13,6 @@ export function addUserNoAuth(serialId, startTime, endTime, mobile) {
 export function queryNodeRealStatus(serialId) {
  return post(`consumer/common?CMD=query_node_real_status&serialId=${serialId}`);  
 }
+export function settingRemoteLed(obox_serial_id, serialId, status) {
+ return post(`consumer/common?CMD=setting_remote_led&type=3&obox_serial_id=${obox_serial_id}&serialId=${serialId}&status=${status}`);  
+}

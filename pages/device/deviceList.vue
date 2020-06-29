@@ -145,8 +145,12 @@
 				// 	infrared: 1 //红外-特殊场景
 				// }
 				console.log(getDevicePath(parseInt(tarObj.device_type, 16), parseInt(tarObj.device_child_type, 16)))
+				let url = `${getDevicePath(parseInt(tarObj.device_type, 16), parseInt(tarObj.device_child_type, 16))}&serialId=${tarObj.serialId}&status=${tarObj.state}&title=${tarObj.name}`
+				if(tarObj.obox_serial_id) {
+					url += `&obox_serial_id=${tarObj.obox_serial_id}`
+				}
 				uni.navigateTo({
-					url:`${getDevicePath(parseInt(tarObj.device_type, 16), parseInt(tarObj.device_child_type, 16))}&serialId=${tarObj.serialId}&status=${tarObj.state}&title=${tarObj.name}`,
+					url: url,
 					fail: function(e) {
 						console.log('e',e)
 						uni.showToast({
@@ -221,12 +225,10 @@
 		/* #endif */
 		flex-direction: column;
 		align-items: center;
-		justify-content: space-between;
-		padding: 15px 10px;
+		justify-content: space-around;
 	}
 	.text {
 		font-size: 26rpx;
-		margin-top: 10rpx;
 	}
 	.example-body {
 		padding: 15px;
@@ -241,6 +243,5 @@
 		color: #b8b8b8;
 		font-size: 12px;
 		text-align: center;
-		margin-top: 10px;
 	}
 </style>

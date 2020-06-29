@@ -141,4 +141,19 @@
 	.no-border {
 		border: none !important;
 	}
+	.mr10 {
+		margin-right: 10px;
+	}
+	.wrap {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		align-items: center;
+	}
+	.mb15{
+		margin-bottom: 15px;
+	}
+	.font-bold {
+		font-weight: bold;
+	}
 </style>

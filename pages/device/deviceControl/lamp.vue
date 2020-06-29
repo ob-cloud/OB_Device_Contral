@@ -28,7 +28,8 @@
 				percent: 0,
 				isOpen: false,
 				coldNum: 0,
-				haveCold: false
+				haveCold: false,
+				serialId: ''
 			}
 		},
 		methods: {

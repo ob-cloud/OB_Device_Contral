@@ -42,11 +42,12 @@
 			return {
 				providerList: [],
 				hasProvider: false,
-				account: '18970000001',//19925872332,18970000001
+				account: '15989156711',//19925872332(Cloud),18970000001, 13650830713(Cloud), 15989156711(Cloud)
 				password: '12345678',
 				positionTop: 0,
 				isDevtools: false,
-				topHeight: 20
+				topHeight: 20,
+				closeTap: false
 			}
 		},
 		// computed: mapState(['forcedLogin']),
@@ -58,6 +59,8 @@
 				 * 检测用户账号密码是否在已注册的用户列表中
 				 * 实际开发中，使用 uni.request 将账号信息发送至服务端，客户端在回调函数中获取结果信息。
 				 */
+				if(this.closeTap) return
+				this.closeTap = true
 				const data = {
 					password: md5(btoa(this.password) + this.password),
 					username:  this.account,
@@ -72,6 +75,7 @@
 					this.backEven()
 				}).catch(err => {
 					console.log(err)
+					this.closeTap = false
 				})
 			},
 			backEven(){

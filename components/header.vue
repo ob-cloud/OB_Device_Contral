@@ -1,5 +1,5 @@
 <template>
-	<view :style="{height: (topHeight + 44) + 'px',backgroundColor:theme? '#0faeff':''}" style="width: 100vw;">
+	<view :style="{height: (topHeight + 44) + 'px',backgroundColor:theme? bcgColor :''}" style="width: 100vw;">
 		<view class="status_bar" :style="{height: topHeight + 'px'}">
 		  <!-- 这里是状态栏 -->
 		</view>
@@ -24,7 +24,12 @@
 				// 内容区域是否通栏
 				type: Boolean,
 				default: false
-			}
+			},
+			bcgColor: {
+				// 内容区域是否通栏
+				type: String,
+				default: "#0faeff"
+			},
 		},
 		model: {
 			prop: 'value',

@@ -320,7 +320,9 @@ export const deviceInfo = [{
 		id: 1,
 		name: '窗帘',
 		show: true,
-		image: 'curtain_home'
+		image: 'curtain_home',
+		path: '/pages/device/deviceControl/curtains',
+		params: {}
 	}, {
 		id: 2,
 		name: '投影仪幕布',
@@ -498,11 +500,13 @@ export const deviceInfo = [{
 	id: 13,
 	name: '线控面板',
 	show: true,
+	path: '/pages/device/deviceControl/airControl',
 	children: [{
 		id: 1,
 		name: '空调线控器',
 		show: true,
-		image: 'air_con_panel'
+		image: 'air_con_panel',
+		params:{}
 	}]
 }, {
 	id: 14,
@@ -553,12 +557,18 @@ export const deviceInfo = [{
 	id: 22,
 	name: '遥控灯',
 	image: 'remote_led',
-	children: []
+	children: [],
+	path:'/pages/device/deviceControl/controlLamp',
+	children: [{
+		id: 1,
+		name: '遥控灯',
+		params:{}
+	}],
 }, {
 	id: 32,
 	name: '摄像头',
 	image: 'camera_home',
-	children: []
+	children: [],
 }, {
 	id: 81,
 	name: 'wifi红外转发器',
