@@ -1,12 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页,
 		{
-			"path": "pages/device/irDeviceControl/airControl",
-			"style": {
-				"navigationBarTitleText": "红外空调",
-				"navigationStyle": "custom"
-			}
-		}, {
 			"path": "pages/device/deviceList",
 			"style": {
 				"navigationBarTitleText": "设备列表",
@@ -71,7 +65,25 @@
 				"navigationBarTitleText": "红外设备列表",
 				"navigationStyle": "custom"
 			}
-		},         
+		},  {
+			"path": "pages/device/irDeviceControl/airControl",
+			"style": {
+				"navigationBarTitleText": "红外空调",
+				"navigationStyle": "custom"
+			}
+		},   {
+			"path": "pages/device/irDeviceControl/tvControl",
+			"style": {
+				"navigationBarTitleText": "电视遥控器",
+				"navigationStyle": "custom"
+			}
+		},  {
+			"path": "pages/device/irDeviceControl/custom",
+			"style": {
+				"navigationBarTitleText": "自定义",
+				"navigationStyle": "custom"
+			}
+		},     
 		// 待删除
 		{
 			"path": "pages/reg/reg",

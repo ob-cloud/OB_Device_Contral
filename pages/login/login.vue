@@ -42,8 +42,8 @@
 			return {
 				providerList: [],
 				hasProvider: false,
-				account: '15989156711',//18970000001, 19925872332(Cloud), 13650830713(Cloud), 15989156711(Cloud)
-				password: '28068198',
+				account: '18970000001',//18970000001, 19925872332(Cloud), 13650830713(Cloud), 15989156711(Cloud)
+				password: '12345678',
 				positionTop: 0,
 				isDevtools: false,
 				topHeight: 20,
@@ -66,6 +66,9 @@
 					username:  this.account,
 					grant_type: "password"
 				};
+				uni.showLoading({
+				    title: '加载中'
+				});
 				login(data).then(res => {
 					// 执行某些操作
 					this.setLogin({
@@ -76,6 +79,7 @@
 				}).catch(err => {
 					console.log(err)
 					this.closeTap = false
+					uni.hideLoading();
 				})
 			},
 			backEven(){

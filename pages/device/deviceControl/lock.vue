@@ -71,14 +71,19 @@
 			},
 			sendOpenNum() {
 				// serialId, startTime, endTime, mobile
+				uni.showLoading({
+					title: '发送中'
+				});
 				addUserNoAuth(this.serialId, (dayjs(this.date) - 0) ,(dayjs(this.endDate).add(1, 'day') - 1),this.phone).then(ele => {
 					console.log('date',ele)
+					uni.hideLoading()
 					uni.showToast({
 						title: '发送成功',
 						duration: 1000
 					});
 				}).catch(err => {
 					console.log('err',err)
+					uni.hideLoading()
 					uni.showToast({
 						title: '发送错误',
 						icon: 'none',

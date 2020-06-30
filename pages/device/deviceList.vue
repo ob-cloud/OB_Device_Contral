@@ -119,7 +119,11 @@
 			},
 			// 获取设备列表
 			getDeviceList(){
+				uni.showLoading({
+				    title: '加载中'
+				});
 				getDeviceList({}).then(res => {
+					uni.hideLoading();
 					if(res.status === 200 && res.data && res.data.config) {
 						this.deviceList = res.data.config;
 						uni.stopPullDownRefresh();
@@ -128,6 +132,7 @@
 					}
 				}).catch(err => {
 					uni.stopPullDownRefresh();
+					uni.hideLoading();
 				})
 			},
 			getAliDev() {
@@ -165,7 +170,7 @@
 						}
 					}
 				})
-				return tarImg;
+				return tarImg || 'device';
 			},
 			contralDevice(index) {
 				let tarObj = this.deviceList[index]

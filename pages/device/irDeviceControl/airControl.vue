@@ -25,7 +25,7 @@
 			<view class="btn-box">
 				<view class="top-btn">
 					<view>
-						<picker @change="bindPickerChange" :disabled="model === '00'" :value="index" :range="array" range-key="value">
+						<picker @change="bindPickerChange" :disabled="model === '00'" :value="pickIndex" :range="array" range-key="value">
 							<view class="wrap">
 								<image src="/static/img/deviceImg/modelChange.png" style="width:10vw; height: 10vw;"></image>
 								<text>模式</text>
@@ -34,7 +34,7 @@
 					</view>
 					<view class="wrap">
 						<image v-if="model !== '00'" src="/static/img/deviceImg/btnClose.png" style="width:10vw; height: 10vw;" @tap="switchBtn('00')"></image>
-						<image v-else src="/static/img/deviceImg/btnOpen.png" style="width:10vw; height: 10vw;" @tap="switchBtn('01')"></image>
+						<image v-else src="/static/img/deviceImg/btnOpen.png" style="width:10vw; height: 10vw;" @tap="switchBtn('21')"></image>
 						<text>开关</text>
 					</view>
 					<view class="wrap">
@@ -47,6 +47,16 @@
 					<text>温度</text>
 					<view class="warm-btn" @tap="upWarm">+</view>
 				</view>
+				<view class="top-btn">
+					<view class="wrap">
+						<image src="/static/img/deviceImg/columnContral.png" style="width:10vw; height: 10vw;" @tap="columnContral"></image>
+						<text>上下摆风</text>
+					</view>
+					<view class="wrap">
+						<image src="/static/img/deviceImg/rowControl.png" style="width:10vw; height: 10vw;" @tap="rowControl"></image>
+						<text>左右摆风</text>
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -54,7 +64,7 @@
 
 <script>
 	import mHeader from '@/components/header.vue'
-	import { settingNodeStatus, queryNodeRealStatus } from '@/api/device.js'
+	import { settingNodeStatus, controlIrDevice } from '@/api/device.js'
 	export default {
 		components: {
 			mHeader
@@ -62,12 +72,13 @@
 		data() {
 			return {
 				title: '空调控制器',
-				status: '00',
-				model: '',
-				speed: '',
-				temp: '',
-				upSwing: '',
-				leftSwing: '',
+				serialId: '',
+				index: '',
+				model: '00',
+				temp: 'ff',
+				speed: '00',
+				upSwing: 'ff',
+				leftSwing: 'ff',
 				array: [
 					{"key":"11","value":"自动"},
 					{"key":"21","value":"制冷"},
@@ -75,8 +86,7 @@
 					{"key":"41","value":"送风"},
 					{"key":"51","value":"制热"},
 				],
-				index: 0,
-				timer: null
+				pickIndex: 0,
 			}
 		},
 		computed:{
@@ -128,8 +138,8 @@
 						this.changeAir(`3101ff${this.upSwing}${this.leftSwing}0103`)
 						break;
 					case '41':
-					// 送风无温度，无自动风量
-						this.changeAir(`41${this.speed === '00'? '01' : this.speed}ff${this.upSwing}${this.leftSwing}0103`)
+					// 无自动风量
+						this.changeAir(`41${this.speed === '00'? '01' : this.speed}1a${this.upSwing}${this.leftSwing}0103`)
 						break;
 					case '51':
 						this.changeAir(`51${this.speed}1a${this.upSwing}${this.leftSwing}0103`)
@@ -138,8 +148,12 @@
 						break;
 				}
 			},
-			switchBtn(str){
-				this.changeAir(`${str}ffffffff0103`)
+			switchBtn(str){ //开关
+				this.controlIrDevice(str === '21' ? 'on' : 'off',() => {
+					this.temp = '1a';
+					this.speed = '00';
+					this.model = str;
+				})
 			},
 			dealSpeed() {
 				// 送风(41)无自动 抽湿(31)仅1档
@@ -149,6 +163,12 @@
 					num = '01'
 				} 
 				this.changeAir(`${this.model}${num}${this.temp}${this.upSwing}${this.leftSwing}0103`)
+			},
+			columnContral() {
+				this.changeAir(`${this.model}${this.speed}${this.temp}${this.upSwing !== '01' ? '01': '00'}${this.leftSwing}0103`)
+			},
+			rowControl() {
+				this.changeAir(`${this.model}${this.speed}${this.temp}${this.upSwing}${this.leftSwing !== '01' ? '01': '00'}0103`)
 			},
 			downWarm(){
 				const warmNum = parseInt(this.temp, 16) - 1
@@ -160,33 +180,40 @@
 				const warmNum = parseInt(this.temp, 16) + 1
 				if(warmNum > 30) return;
 				const temp = warmNum.toString(16)
-				console.log(temp);
 				this.changeAir(`${this.model}${this.speed}${temp}${this.upSwing}${this.leftSwing}0103`)
 			},
 			changeAir(status) { //改变状态，并查询最新status
-				clearTimeout(this.timer)
-				settingNodeStatus(this.serialId, status).then(res => {
-					console.log('res1111', res)
-					// this.timer = setTimeout(() => {
-					// 	queryNodeRealStatus(this.serialId).then(res => {
-					// 		console.log('res222', res)
-					// 		if(res.data && res.data.status) {
-					// 			this.dealStatus(res.data.status)
-					// 		}
-					// 	}).catch(err => {
-					// 		console.log(err)
-					// 	})
-					// }, 500)
+				this.controlIrDevice(this.bytesToKey(status),() => {
 					this.dealStatus(status)
+				})
+			},
+			controlIrDevice(str,fn) {
+				uni.showLoading({
+				    title: '命令下发中'
+				});
+				controlIrDevice(this.serialId, this.index, str, '0').then(res => {
+					fn && fn()
+					uni.hideLoading()
 				}).catch(err => {
 					console.log('err', err)
+					uni.hideLoading()
 				})
+			},
+			bytesToKey(states) { //将原来bytes的参数转换为key的形式
+				return this.getAirConditionKeys(states.slice(4,6),states.slice(0,2),states.slice(2,4),states.slice(6,8),states.slice(8,10))
+			},
+			getAirConditionKeys(templure, mode, speed, windVertical, windHorizon) {
+			  const modeMap = {'11': 'a', '21': 'r', '31': 'd', '41': 'w', '51': 'h'}[mode]
+			  const speedMap = {'00': 's0', '01': 's1', '02': 's2', '03': 's3'}[speed]
+			  const windVerticalMap = {'00': 'u0', '01': 'u1'}[windVertical] || ''
+			  const windHorizonMap = {'00': 'l0', '01': 'l1'}[windHorizon] || ''
+			  return `${modeMap}_${speedMap}_${templure==='ff'? '': parseInt(templure, 16)}_${windVerticalMap}_${windHorizonMap}_p0`
 			}
 		},
 		onLoad(option){
 			this.serialId = option.serialId
-			if(option.title) this.title = option.title
-			if(option.status) this.dealStatus(option.status)
+			this.index = option.index
+			this.title = option.name
 		}
 	}
 </script>

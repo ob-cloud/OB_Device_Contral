@@ -156,4 +156,26 @@
 	.font-bold {
 		font-weight: bold;
 	}
+	.flex-between,.flex-around {
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		padding: 10px;
+		width: 100%;
+	}
+	.flex-between {
+		justify-content: space-between;
+	} 
+	.flex-around {
+		justify-content: space-around;
+	}
+	.rotate90 {
+		transform: rotate(90deg);
+	}
+	.rotate180 {
+		transform: rotate(180deg);
+	}
+	.rotate270 {
+		transform: rotate(270deg);
+	}
 </style>

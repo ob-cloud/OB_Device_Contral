@@ -161,9 +161,11 @@
 				this.changeAir(`${this.model}${num}${this.temp}${this.upSwing}${this.leftSwing}0103`)
 			},
 			columnContral() {
+				if(this.model === '00') return;
 				this.changeAir(`${this.model}${this.speed}${this.temp}${this.upSwing !== '01' ? '01': '00'}${this.leftSwing}0103`)
 			},
 			rowControl() {
+				if(this.model === '00') return;
 				this.changeAir(`${this.model}${this.speed}${this.temp}${this.upSwing}${this.leftSwing !== '01' ? '01': '00'}0103`)
 			},
 			downWarm(){
@@ -180,9 +182,14 @@
 				this.changeAir(`${this.model}${this.speed}${temp}${this.upSwing}${this.leftSwing}0103`)
 			},
 			changeAir(status) { //改变状态，并查询最新status
-				clearTimeout(this.timer)
+				// clearTimeout(this.timer)
+				uni.showLoading({
+					title: '发送中'
+				});
 				settingNodeStatus(this.serialId, status).then(res => {
 					console.log('res1111', res)
+					uni.hideLoading()
+					this.dealStatus(status)
 					// this.timer = setTimeout(() => {
 					// 	queryNodeRealStatus(this.serialId).then(res => {
 					// 		console.log('res222', res)
@@ -193,8 +200,8 @@
 					// 		console.log(err)
 					// 	})
 					// }, 500)
-					this.dealStatus(status)
 				}).catch(err => {
+					uni.hideLoading()
 					console.log('err', err)
 				})
 			}
