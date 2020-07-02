@@ -3,8 +3,13 @@
 		<m-header :title="title" theme bcgColor="#0faeff"></m-header>
 		<view class="curtains-box">
 			<view class="flex-around">
-				<image src="../../../static/img/deviceImg/lampSwitch.png" style="width: 60px;height: 60px;" @tap="controlTv('power')"></image>
-				<image src="../../../static/img/deviceImg/silence.png" style="width: 60px;height: 60px;" @tap="controlTv('mute')"></image>
+				<image src="../../../static/img/deviceImg/lampSwitch.png" style="width: 50px;height: 50px;" @tap="controlTv('power')"></image>
+				<image src="../../../static/img/deviceImg/backhome.png" style="width: 50px;height: 50px;" @tap="controlTv('back')"></image>
+				<image src="../../../static/img/deviceImg/silence.png" style="width: 50px;height: 50px;" @tap="controlTv('mute')"></image>
+			</view>
+			<view class="flex-around">
+				<image src="../../../static/img/deviceImg/play1.png" style="width: 50px;height: 50px;" @tap="controlTv('signal')"></image>
+				<image src="../../../static/img/deviceImg/menu.png" style="width: 50px;height: 50px;" @tap="controlTv('menu')"></image>
 			</view>
 			<view class="flex-between cen-control">
 				<view class="volume-control">
@@ -13,25 +18,25 @@
 					<text class="mini-btn-text" @tap="controlTv('vol-')">-</text>
 				</view>
 				<view class="conter-control">
-					<view class="mini-btn-text">
-						<image src="../../../static/img/to-top.png" class="direction-btn"  @tap="controlTv('up')"></image>
+					<view class="mini-btn-text"  @tap="controlTv('up')">
+						<image src="../../../static/img/to-top.png" class="direction-btn"></image>
 					</view>
 					<view class="center-control">
-						<image src="../../../static/img/to-top.png" class="direction-btn rotate270"  @tap="controlTv('left')"></image>
-						<text class="tip-text">确定</text>
-						<image src="../../../static/img/to-top.png" class="direction-btn rotate90"  @tap="controlTv('right')"></image>
+						<image src="../../../static/img/to-top.png" class="direction-btn rotate270 add-pad"  @tap="controlTv('left')"></image>
+						<text class="tip-text add-pad" @tap="controlTv('ok')">ok</text>
+						<image src="../../../static/img/to-top.png" class="direction-btn rotate90 add-pad"  @tap="controlTv('right')"></image>
 					</view>
-					<view class="mini-btn-text rotate180">
-						<image src="../../../static/img/to-top.png" class="direction-btn"  @tap="controlTv('down')"></image>
+					<view class="mini-btn-text rotate180" @tap="controlTv('down')">
+						<image src="../../../static/img/to-top.png" class="direction-btn"></image>
 					</view>
 				</view>
 				<view class="volume-control">
-					<view class="mini-btn-text">
-						<image src="../../../static/img/to-top.png" class="direction-btn"  @tap="controlTv('ch%2B')"></image>
+					<view class="mini-btn-text"  @tap="controlTv('ch%2B')">
+						<image src="../../../static/img/to-top.png" class="direction-btn"></image>
 					</view>
-					<text>音量</text>
-					<view class="mini-btn-text rotate180">
-						<image src="../../../static/img/to-top.png" class="direction-btn"  @tap="controlTv('ch-')"></image>
+					<text>频道</text>
+					<view class="mini-btn-text rotate180"   @tap="controlTv('ch-')">
+						<image src="../../../static/img/to-top.png" class="direction-btn"></image>
 					</view>
 				</view>
 			</view>
@@ -58,16 +63,14 @@
 		},
 		methods: {
 			controlTv(key) {
-				console.log('key',key)
 				controlIrDevice(this.serialId, this.index, key, '0').then(res => {
-					console.log('res', res)
 					uni.showToast({
 						title: '命令已下发',
 						icon: 'none',
 						duration: 1500
 					});
 				}).catch(err => {
-					console.log('err', err)
+					
 				})
 			}
 		},
@@ -131,6 +134,14 @@
 }
 .tip-text {
 	color: #ccc;
-	font-size: 14px;
+	font-size: 16px;
+}
+.add-pad {
+	padding: 20px 10px;
+}
+
+.primary {
+	border-color: #0faeff !important;
+	color: #0faeff !important;
 }
 </style>

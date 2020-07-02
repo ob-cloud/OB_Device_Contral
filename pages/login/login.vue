@@ -5,7 +5,7 @@
 		<view class="input-group">
 			<view class="input-row border">
 				<text class="title">账号：</text>
-				<m-input class="m-input" type="text" clearable focus v-model="account" placeholder="请输入账号"></m-input>
+				<m-input class="m-input" type="text" clearable v-model="account" placeholder="请输入账号"></m-input>
 			</view>
 			<view class="input-row">
 				<text class="title">密码：</text>
@@ -23,7 +23,6 @@
 	import { login } from '@/api/global.js'
 	import md5 from 'md5';
 	import btoa from 'btoa';
-	
 	import service from '@/service.js';
 	import {
 		mapState,
@@ -42,8 +41,8 @@
 			return {
 				providerList: [],
 				hasProvider: false,
-				account: '18970000001',//18970000001, 19925872332(Cloud), 13650830713(Cloud), 15989156711(Cloud)
-				password: '12345678',
+				account: '',//18970000001, 19925872332(Cloud), 13650830713(Cloud), 15989156711(Cloud)
+				password: '',
 				positionTop: 0,
 				isDevtools: false,
 				topHeight: 20,
@@ -75,11 +74,21 @@
 						token: res.access_token,
 						userName: this.account
 					});
+					uni.setStorage({
+					    key: 'account',
+					    data: this.account,
+					});
+					uni.setStorage({
+					    key: 'password',
+					    data: this.password,
+					});
 					this.backEven()
 				}).catch(err => {
 					console.log(err)
 					this.closeTap = false
-					uni.hideLoading();
+					setTimeout(() => { //防止load与showToast冲突bug
+						uni.hideLoading()
+					}, 1000)
 				})
 			},
 			backEven(){
@@ -95,6 +104,18 @@
 		onReady() {
 			// this.bindLogin()
 			this.topHeight = uni.getSystemInfoSync().statusBarHeight
+			uni.getStorage({
+			    key: 'account',
+			    success:  (res) => {
+					this.account = res.data
+			    }
+			});
+			uni.getStorage({
+			    key: 'password',
+			    success:  (res) => {
+					this.password = res.data
+			    }
+			});
 		}
 	}
 </script>

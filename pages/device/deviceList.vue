@@ -5,7 +5,7 @@
 				<view class="uni-input top-select">{{array[selectIndex].label}}</view>
 			</picker>
 		</uni-section>
-		<view class="example-body" v-if="deviceList.length">
+		<view class="example-body">
 			<uni-grid :column="3" :highlight="true">
 				<uni-grid-item v-for="(item, index) in deviceList" :index="index" :key="index" v-if="!array[selectIndex].value || item.obox_serial_id === array[selectIndex].value"  @tap="contralDevice(index)">
 					<view class="grid-item-box" style="background-color: #fff;">
@@ -17,12 +17,12 @@
 					</view>
 				</uni-grid-item>
 				<!-- 红外设备 -->
-				<uni-grid-item v-for="(item, index) in aliDev" :index="index" :key="item.deviceId" @tap="controlAliDev(item)">
+				<uni-grid-item v-for="(item, index) in aliDev" :index="item + deviceList.length" :key="item.deviceId" @tap="controlAliDev(item)">
 					<view class="grid-item-box" style="background-color: #fff;">
 						<image src="/static/img/deviceImg/infra_home.png">
 						<text class="text">{{ item.name }}</text>
 						<text class="device-status">
-							--
+							
 						</text>
 					</view>
 				</uni-grid-item>
@@ -79,6 +79,7 @@
 				}
 			} else {
 				this.deviceList = []
+				this.aliDev = []
 				uni.showModal({
 					title: '未登录',
 					content: '您未登录，需要登录后才能继续',
@@ -128,6 +129,7 @@
 						this.deviceList = res.data.config;
 						uni.stopPullDownRefresh();
 					} else {
+						this.deviceList = []
 						throw res
 					}
 				}).catch(err => {
@@ -140,6 +142,8 @@
 					console.log('res', res)
 					if(res.data && res.data.configs) {
 						this.aliDev = res.data.configs
+					} else {
+						this.aliDev = []
 					}
 				}).catch(err => {
 					console.log('err', err)
@@ -203,7 +207,7 @@
 		onPullDownRefresh:function(){
 			if (this.hasLogin) { 
 				this.getDeviceList();
-				this.getAliDe()
+				this.getAliDev()
 			}
 		},
  

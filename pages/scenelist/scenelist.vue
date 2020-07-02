@@ -5,20 +5,20 @@
 				<view class="uni-input top-select">{{array[selectIndex].label}}</view>
 			</picker>
 		</uni-section>
-		<uni-card v-for="item in sceneList" :key="item.scene_number" :title="item.scene_name" :extra="dealExtra(item)" isShadow note="true" v-if="!array[selectIndex].value || item.obox_serial_id === array[selectIndex].value">
+		<uni-card v-for="item in sceneList" :key="item.scene_number" :title="item.scene_name" :extra="dealExtra(item)" isShadow v-if="!array[selectIndex].value || item.obox_serial_id === array[selectIndex].value" @click="contral(item.scene_number, '02')">
 			<text class="content-box-text">
 				场景类型：{{sceneType[item.scene_type]}} 
 				场景序号：{{item.scene_number}}
 				状态：<text :style="{'color': item.scene_status ? 'green':'red'}">{{item.scene_status ? '启用': '禁用'}}</text>
 				\n{{item.obox_scene_number ? ('OBOX本地场景序号：' + item.obox_scene_number) : ''}}
 			</text>
-			<template slot="footer">
+			<!-- <template slot="footer">
 				<view style="text-align: right;">
 					<button class="mini-btn" type="warn"  size="mini"  @tap="contral(item.scene_number, '00')" v-if="item.scene_status">禁用</button>
 					<button class="mini-btn" type="default"  size="mini"  @tap="contral(item.scene_number, '01')" v-else>启用</button>
 					<button class="primary" type="primary" :disabled="!item.scene_status" size="mini"  @tap="contral(item.scene_number, '02')" v-if="item.scene_status">触发场景</button>
 				</view>
-			</template>
+			</template> -->
 		</uni-card>	
 	</view>
 </template>

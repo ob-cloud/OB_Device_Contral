@@ -72,15 +72,15 @@
 				"navigationStyle": "custom"
 			}
 		},   {
-			"path": "pages/device/irDeviceControl/tvControl",
-			"style": {
-				"navigationBarTitleText": "电视遥控器",
-				"navigationStyle": "custom"
-			}
-		},  {
 			"path": "pages/device/irDeviceControl/custom",
 			"style": {
 				"navigationBarTitleText": "自定义",
+				"navigationStyle": "custom"
+			}
+		},  {
+			"path": "pages/device/irDeviceControl/tvControl",
+			"style": {
+				"navigationBarTitleText": "电视遥控器",
 				"navigationStyle": "custom"
 			}
 		},     
