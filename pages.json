@@ -83,13 +83,6 @@
 				"navigationBarTitleText": "电视遥控器",
 				"navigationStyle": "custom"
 			}
-		},     
-		// 待删除
-		{
-			"path": "pages/reg/reg",
-			"style": {
-				"navigationBarTitleText": "注册"
-			}
 		}
 	],
 	"tabBar": {

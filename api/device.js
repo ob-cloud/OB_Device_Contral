@@ -16,7 +16,7 @@ export function queryNodeRealStatus(serialId) {//查看设备真实状态
 export function settingRemoteLed(obox_serial_id, serialId, status) { //设置遥控灯
  return post(`consumer/common?CMD=setting_remote_led&type=3&obox_serial_id=${obox_serial_id}&serialId=${serialId}&status=${status}`);  
 }
-export function queryAliDev() {//查看红外涉笔
+export function queryAliDev() {//查看红外设备
  return post(`consumer/common?CMD=query_ali_dev`);  
 }
 export function queryIrDevice(serialId) {//查询红外下面设备

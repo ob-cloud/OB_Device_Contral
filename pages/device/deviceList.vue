@@ -153,11 +153,11 @@
 				uni.navigateTo({
 					url: `/pages/device/irDeviceList?deviceId=${item.deviceId}&name=${item.name}`,
 					fail: function(e) {
-						uni.showToast({
-							title: '功能开发中',
-							icon: 'none',
-							duration: 1000
-						});
+						// uni.showToast({
+						// 	title: '功能开发中',
+						// 	icon: 'none',
+						// 	duration: 1000
+						// });
 					}
 				});
 			},
@@ -186,11 +186,11 @@
 					url: url,
 					fail: function(e) {
 						console.log('e',e)
-						uni.showToast({
-							title: '功能开发中',
-							icon: 'none',
-							duration: 1000
-						});
+						// uni.showToast({
+						// 	title: '功能开发中',
+						// 	icon: 'none',
+						// 	duration: 1000
+						// });
 					}
 				});
 			},
