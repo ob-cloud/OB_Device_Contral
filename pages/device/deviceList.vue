@@ -17,7 +17,7 @@
 					</view>
 				</uni-grid-item>
 				<!-- 红外设备 -->
-				<uni-grid-item v-for="(item, index) in aliDev" :index="item + deviceList.length" :key="item.deviceId" @tap="controlAliDev(item)">
+				<uni-grid-item v-for="(item, index) in aliDev" :index="index + 100" :key="item.deviceId" @tap="controlAliDev(item)">
 					<view class="grid-item-box" style="background-color: #fff;">
 						<image src="/static/img/deviceImg/infra_home.png">
 						<text class="text">{{ item.name }}</text>
@@ -72,7 +72,6 @@
 			if (this.hasLogin) { 
 				// 设备列表，红外设备
 				this.getDeviceList()
-				this.getAliDev()
 				// 获取obox列表1
 				if(!this.oboxList.length) {
 					this.getOboxList()
@@ -125,6 +124,7 @@
 				});
 				getDeviceList({}).then(res => {
 					uni.hideLoading();
+					this.getAliDev(); //为了确保设备的排列顺序，与uni有关。
 					if(res.status === 200 && res.data && res.data.config) {
 						this.deviceList = res.data.config;
 						uni.stopPullDownRefresh();
@@ -197,7 +197,7 @@
 			getStatus(item){
 				let tarStr;
 				try{
-					tarStr = Suit.getStatusDescriptor(item.state,item.device_type,item.device_child_type) || '-'
+					tarStr = Suit.getStatusDescriptor(item.state,item.device_type,item.device_child_type) || ''
 				}catch(e){
 					tarStr = '-'
 				}
@@ -207,7 +207,6 @@
 		onPullDownRefresh:function(){
 			if (this.hasLogin) { 
 				this.getDeviceList();
-				this.getAliDev()
 			}
 		},
  

@@ -41,7 +41,6 @@ const request = (url, method, data, header, power) => {
             throw res[1].data
         }
     }).catch(parmas => {
-		console.log('params', parmas)
 　　　　　　switch (parmas.code) {
 　　　　　　　　case 401:
 　　　　　　　　　　break
