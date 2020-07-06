@@ -46,7 +46,7 @@
 
 <script>
 	import mHeader from '@/components/header.vue'
-	import { settingNodeStatus, controlIrDevice } from '@/api/device.js'
+	import { controlIrDevice } from '@/api/device.js'
 	export default {
 		components: {
 			mHeader
