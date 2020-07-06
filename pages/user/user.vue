@@ -26,6 +26,7 @@
 			},
 			bindLogout() {
 				this.logout();
+				 uni.removeStorageSync('password');
 				/**
 				 * 如果需要强制登录跳转回登录页面
 				 */

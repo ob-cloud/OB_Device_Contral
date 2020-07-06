@@ -33,11 +33,15 @@
 <script>
 	import { getDeviceList ,queryAliDev } from '@/api/device.js'
 	import { deviceInfo } from '@/common/deviceInfo.js'
+	import { login } from '@/api/global.js'
 	import Suit from '@/common/suit.umd.js'
 	import { getDevicePath } from '@/common/deviceInfo.js'
+	import md5 from 'md5';
+	import btoa from 'btoa';
 	import {
 		mapState,
-		mapActions
+		mapActions,
+		mapMutations
 	} from 'vuex'
 	import uniSection from '@/components/uni-section/uni-section.vue'
 	import uniGrid from '@/components/uni-grid/uni-grid.vue'
@@ -69,44 +73,59 @@
 		onLoad() {
 		},
 		onShow(){
-			if (this.hasLogin) { 
-				// 设备列表，红外设备
-				this.getDeviceList()
-				// 获取obox列表1
-				if(!this.oboxList.length) {
-					this.getOboxList()
-				}
+			if (this.hasLogin) {
+				this.getTotalList()
 			} else {
-				this.deviceList = []
-				this.aliDev = []
-				uni.showModal({
-					title: '未登录',
-					content: '您未登录，需要登录后才能继续',
-					/**
-					 * 如果需要强制登录，不显示取消按钮
-					 */
-					showCancel: !this.forcedLogin,
-					success: (res) => {
-						if (res.confirm) {
-							/**
-							 * 如果需要强制登录，使用reLaunch方式
-							 */
-							if (this.forcedLogin) {
-								uni.reLaunch({
-									url: '../login/login'
-								});
-							} else {
-								uni.navigateTo({
-									url: '../login/login'
-								});
+				// 要是记录了账号密码直接登录
+				const account = uni.getStorageSync('account');
+				const password = uni.getStorageSync('password');
+				if(account && password) {
+					login({
+						password: md5(btoa(password) + password),
+						username:  account,
+						grant_type: "password"
+					}).then(res => {
+						this.setLogin({
+							token: res.access_token,
+							userName: account
+						});
+						this.getTotalList()
+					}).catch(err => {
+						console.log(err)
+					})
+				} else {
+					this.deviceList = []
+					this.aliDev = []
+					uni.showModal({
+						title: '未登录',
+						content: '您未登录，需要登录后才能继续',
+						/**
+						 * 如果需要强制登录，不显示取消按钮
+						 */
+						showCancel: !this.forcedLogin,
+						success: (res) => {
+							if (res.confirm) {
+								/**
+								 * 如果需要强制登录，使用reLaunch方式
+								 */
+								if (this.forcedLogin) {
+									uni.reLaunch({
+										url: '../login/login'
+									});
+								} else {
+									uni.navigateTo({
+										url: '../login/login'
+									});
+								}
 							}
 						}
-					}
-				});
+					});
+				}
 			}
 		},        
 		methods: {
 			...mapActions(["getOboxList"]),
+			...mapMutations(['setLogin']),
 			dealExtra(item) {
 				if(item.obox_serial_id) return this.dealOboxName(item.obox_serial_id)
 				return ''
@@ -202,6 +221,14 @@
 					tarStr = '-'
 				}
 				return tarStr
+			},
+			getTotalList() {
+				// 设备列表，红外设备
+				this.getDeviceList()
+				// 获取obox列表1
+				if(!this.oboxList.length) {
+					this.getOboxList()
+				}
 			}
         },
 		onPullDownRefresh:function(){
