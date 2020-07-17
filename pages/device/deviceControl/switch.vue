@@ -110,11 +110,11 @@
 						if(this.switchsList.length) { //处理按钮
 							let statusStr,switchsArr,switchsList=[];
 							if(this.screenList.length > 0) {
-								switchsArr = this.PrefixInteger(parseInt(res.data.status.slice(2,4),16).toString(2), this.screenList.length * 2);
+								switchsArr = this.PrefixInteger(parseInt(res.data.status.slice(2,4),16).toString(2), this.switchsList.length * 2);
 							} else {
-								switchsArr = this.PrefixInteger(parseInt(res.data.status.slice(0,2),16).toString(2), this.screenList.length * 2);
+								switchsArr = this.PrefixInteger(parseInt(res.data.status.slice(0,2),16).toString(2), this.switchsList.length * 2);
 							}
-							for (let i = 0; i < this.screenList.length; i++) {
+							for (let i = 0; i < this.switchsList.length; i++) {
 								switchsList[i] = switchsArr.substr(i*2, 2) === '01'
 							}
 							this.switchsList = switchsList
