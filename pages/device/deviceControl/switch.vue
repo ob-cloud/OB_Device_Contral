@@ -89,7 +89,8 @@
 				if(this.lock) return;
 				this.lock = true
 				uni.showLoading({
-					title: '发送中'
+					title: '发送中',
+					mask: true
 				});
 				settingNodeStatus(this.serialId, status).then(res => {
 					fn && fn()

@@ -390,6 +390,8 @@
         '112300': '无人',
         '112100': '闭合',
         '112101': '打开',
+        '112102': '闭合',
+        '112103': '打开',
         '111901': '有人',
         '111900': '无人'
       },
@@ -863,14 +865,14 @@
       if (TypeHints$1.isAcSensors(deviceSubType)) return SuitStatus[this.__getStatusSubKey(deviceType, deviceSubType, status.slice(4, 6))]; //humidifier
 
       if (TypeHints$1.isHumidifierSensors(deviceSubType)) {
-        const tempNum = status.slice(4, 6);
-        const temp = (tempNum === 'ff' ? '-' : Converter.toDecimal(status.slice(4, 6), 16) - 30) + '℃';
-        const RH = Converter.toDecimal(status.slice(8, 10), 16) + '%RH';
+        const tempNum = status.slice(2, 4);
+        const temp = (tempNum === 'ff' ? '-' : Converter.toDecimal(status.slice(2, 4), 16) - 30) + '℃';
+        const RH = Converter.toDecimal(status.slice(6, 8), 16) + '%RH';
         return `${temp}-${RH}`;
       } // 其它类型传感器烟雾，燃气，尿床，一键呼救，水浸，门磁
 
 
-      return SuitStatus[this.__getStatusSubKey(deviceType, deviceSubType, status.slice(0, 2))] || '';
+      return SuitStatus[this.__getStatusSubKey(deviceType, deviceSubType, status.slice(2, 4))] || '';
     }
     /**
      * 获取门锁状态

@@ -93,7 +93,7 @@
 				})
 			},
 			dealColdNum(num){
-				let tarNum = num || this.coldNum
+				let tarNum = num >= 0 ? num : this.coldNum
 				let coldNum = (255 -  Math.round(tarNum * 2.55)).toString(16);
 				console.log('coldNum',coldNum)
 				return (coldNum.length > 1 ? coldNum : ('0' + coldNum))

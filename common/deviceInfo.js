@@ -8,14 +8,14 @@ export const deviceInfo = [{
 		name: '单色调光',
 		show: true,
 		path: '/pages/device/deviceControl/lamp',
-		params:{},
+		params: {},
 		image: 'led_home'
 	}, {
 		id: 2,
 		name: '冷暖色调光',
 		show: true,
 		path: '/pages/device/deviceControl/lamp',
-		params:{
+		params: {
 			color: 2
 		},
 		image: 'warm_home'
@@ -65,12 +65,12 @@ export const deviceInfo = [{
 	id: 4,
 	name: '智能插座/开关',
 	show: true,
-	path: '/pages/device/deviceControl/switch',
 	children: [{
 		id: 1,
 		name: '1路开关插座',
 		show: true,
 		image: 'chazuo_home',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			socketNum: 1,
 		}
@@ -78,28 +78,29 @@ export const deviceInfo = [{
 		id: 2,
 		name: '继电器',
 		image: 'one_button_wire_socket',
-		params: {
-		}
+		params: {}
 	}, {
 		id: 3,
 		name: '触摸开关',
-		params: {
-		}
+		params: {}
 	}, {
 		id: 12,
 		name: '2路开关智能插座',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			socketNum: 3,
 		}
 	}, {
 		id: 13,
 		name: '3路开关智能插座',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			socketNum: 3,
 		}
 	}, {
 		id: 14,
 		name: '4路开关智能插座',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			socketNum: 4,
 		}
@@ -108,6 +109,7 @@ export const deviceInfo = [{
 		name: '1路开关',
 		show: true,
 		image: 'single_switch',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 1,
 		}
@@ -116,6 +118,7 @@ export const deviceInfo = [{
 		name: '2路开关',
 		show: true,
 		image: 'double_switch',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 2,
 		}
@@ -124,6 +127,7 @@ export const deviceInfo = [{
 		name: '3路开关',
 		show: true,
 		image: 'three_switch',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 3,
 		}
@@ -131,36 +135,42 @@ export const deviceInfo = [{
 		id: 24,
 		name: '4路开关插座',
 		image: 'four_switch',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			socketNum: 4,
 		}
 	}, {
 		id: 25,
 		name: '5路开关插座',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			socketNum: 5,
 		}
 	}, {
 		id: 26,
 		name: '6路开关插座',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			socketNum: 6,
 		}
 	}, {
 		id: 28,
 		name: '8路开关插座',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			socketNum: 8,
 		}
 	}, {
 		id: 31,
 		name: '1路情景面板',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			sceneNum: 1,
 		}
 	}, {
 		id: 32,
 		name: '2路情景面板',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			sceneNum: 2,
 		}
@@ -169,6 +179,7 @@ export const deviceInfo = [{
 		name: '3路情景面板',
 		show: true,
 		image: 'scene_panel',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			sceneNum: 3,
 		}
@@ -177,6 +188,7 @@ export const deviceInfo = [{
 		name: '4路情景面板',
 		show: true,
 		image: 'six_scene',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			sceneNum: 4,
 		}
@@ -185,6 +197,7 @@ export const deviceInfo = [{
 		name: '6路情景面板',
 		show: true,
 		image: 'six_scene',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			sceneNum: 6,
 		}
@@ -193,6 +206,7 @@ export const deviceInfo = [{
 		name: '1路开关+3路情景',
 		show: true,
 		image: 'one_three_panel',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 1,
 			sceneNum: 3,
@@ -202,6 +216,7 @@ export const deviceInfo = [{
 		name: '2路开关+3路情景',
 		show: true,
 		image: 'two_three_panel',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 2,
 			sceneNum: 3,
@@ -211,6 +226,7 @@ export const deviceInfo = [{
 		name: '3路开关+3路情景',
 		show: true,
 		image: 'six_mixed_switch',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 3,
 			sceneNum: 3,
@@ -220,6 +236,7 @@ export const deviceInfo = [{
 		name: '1键单线供电开关',
 		show: true,
 		image: 'one_button_wire_socket',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 1,
 		}
@@ -228,6 +245,7 @@ export const deviceInfo = [{
 		name: '2键单线供电开关',
 		show: true,
 		image: 'two_button_wire_socket',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 2,
 		}
@@ -236,6 +254,7 @@ export const deviceInfo = [{
 		name: '2开关+2情景',
 		show: true,
 		image: 'six_scene',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 2,
 			sceneNum: 2,
@@ -243,6 +262,7 @@ export const deviceInfo = [{
 	}, {
 		id: 71,
 		name: '1路开关+雷达',
+		path: '/pages/device/deviceControl/switch',
 		show: true,
 		params: {
 			switchsNum: 1,
@@ -252,6 +272,7 @@ export const deviceInfo = [{
 	}, {
 		id: 80,
 		name: '3路触摸场景+红外对管',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			sceneNum: 4,
 			infrared: 1
@@ -259,6 +280,7 @@ export const deviceInfo = [{
 	}, {
 		id: 81,
 		name: '1路开关+3路触摸场景+红外对管',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 1,
 			sceneNum: 4,
@@ -269,6 +291,7 @@ export const deviceInfo = [{
 		name: '3路开关+3路触摸场景+红外对管',
 		show: true,
 		image: 'three_scene_three_switch_read',
+		path: '/pages/device/deviceControl/switch',
 		params: {
 			switchsNum: 3,
 			sceneNum: 4,
@@ -277,6 +300,7 @@ export const deviceInfo = [{
 	}, {
 		id: 86,
 		name: '6路触摸场景+红外对管',
+		path: '/pages/device/deviceControl/switch',
 		show: true,
 		image: 'six_scene_read',
 		params: {
@@ -286,8 +310,7 @@ export const deviceInfo = [{
 	}, {
 		id: 90,
 		name: 'WIFI智能插座',
-		params: {
-		}
+		params: {}
 	}, {
 		id: 91,
 		name: '2键窗帘控制面板',
@@ -500,13 +523,13 @@ export const deviceInfo = [{
 	id: 13,
 	name: '线控面板',
 	show: true,
-	path: '/pages/device/deviceControl/airControl',
 	children: [{
 		id: 1,
 		name: '空调线控器',
+		path: '/pages/device/deviceControl/airControl',
 		show: true,
 		image: 'air_con_panel',
-		params:{}
+		params: {}
 	}]
 }, {
 	id: 14,
@@ -543,7 +566,7 @@ export const deviceInfo = [{
 		id: 3,
 		name: 'OB半自动指纹智能门锁',
 		show: true,
-		params:{}
+		params: {}
 	}, {
 		id: 4,
 		name: 'OB酒店门锁',
@@ -558,11 +581,11 @@ export const deviceInfo = [{
 	name: '遥控灯',
 	image: 'remote_led',
 	children: [],
-	path:'/pages/device/deviceControl/controlLamp',
 	children: [{
 		id: 1,
 		name: '遥控灯',
-		params:{}
+		path: '/pages/device/deviceControl/controlLamp',
+		params: {}
 	}],
 }, {
 	id: 32,
@@ -575,14 +598,15 @@ export const deviceInfo = [{
 	image: 'infra_home',
 	children: []
 }]
-export function  getDevicePath(device_type,device_child_type) {
+export function getDevicePath(device_type, device_child_type) {
 	const tarBox = deviceInfo.find(ele => ele.id === device_type);
 	let tarObj;
-	if(tarBox.children && tarBox.children.length) {
+	if (tarBox.children && tarBox.children.length) {
 		tarObj = tarBox.children.find(ele2 => ele2.id === device_child_type);
 	} else {
 		tarObj = tarBox;
 	}
-	if(!tarObj.path && !tarBox.path) return '/404'
-	return (tarObj.path || tarBox.path) + '?' + Object.keys(tarObj.params || {}).map(ele => `${ele}=${tarObj.params[ele]}`).join('&')
+	if (!tarObj.path && !tarBox.path) return '/404'
+	return (tarObj.path || tarBox.path) + '?' + Object.keys(tarObj.params || {}).map(ele => `${ele}=${tarObj.params[ele]}`)
+		.join('&')
 }
