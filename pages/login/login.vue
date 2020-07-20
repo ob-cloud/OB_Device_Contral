@@ -1,5 +1,5 @@
 <template>
-	<view class="content" style="background: url(https://7465-te-651663-1257727594.tcb.qcloud.la/back2.png?sign=79bca63b8d2a84e564c9ed5ef2ce1909&t=1550568007) no-repeat center center;">
+	<view class="content" style="background: url(https://7465-te-651663-1257727594.tcb.qcloud.la/back2.png?sign=79bca63b8d2a84e564c9ed5ef2ce1909&t=1550568007) gray no-repeat center center;">
 		<m-header></m-header>
 		<image bindtap='navigatortap' style="width:40vw;height: 30vh;margin: 0 auto;" mode="aspectFit"  src="/static/img/logo.png"></image>
 		<view class="input-group">
