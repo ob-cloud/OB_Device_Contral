@@ -316,16 +316,18 @@ export const deviceInfo = [{
 		name: '2键窗帘控制面板',
 		show: true,
 		image: 'three_switch',
+		path: '/pages/device/deviceControl/switch',
 		params: {
-			switchsNum: 2,
+			curtainNum: 1,
 		}
 	}, {
 		id: 92,
 		name: '4键窗帘控制面板',
 		show: true,
 		image: 'six_scene',
+		path: '/pages/device/deviceControl/switch',
 		params: {
-			switchsNum: 4,
+			curtainNum: 2,
 		}
 	}, {
 		id: 101,
@@ -602,7 +604,7 @@ export function getDevicePath(device_type, device_child_type) {
 	const tarBox = deviceInfo.find(ele => ele.id === device_type);
 	let tarObj;
 	if (tarBox.children && tarBox.children.length) {
-		tarObj = tarBox.children.find(ele2 => ele2.id === device_child_type);
+		tarObj = tarBox.children.find(ele2 => ele2.id === device_child_type) || {};
 	} else {
 		tarObj = tarBox;
 	}

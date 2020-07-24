@@ -1,21 +1,30 @@
 <template>
 	<view class="content" >
 		<m-header :title="title"></m-header>
-		<view class="img-infrared">
-			<!-- 红外 -->
-			<image v-for="(item, index) in infraredList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'infrared.png' : 'infraredoff.png')" @tap="changeInfrared(index)" :style="{width: '15vw', height: '10vw'}" class="infrared-img"></image>
-		</view>
-		<view class="img-scene">
-			<!-- 场景 -->
-			<image v-for="(item, index) in screenList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @tap="changeScene(index)" :style="{width: '25vw', height: '25vw'}" class="switch-img"></image>
-		</view>
-		<view class="img-box" v-if="socketList.length < 1">
-			<!-- 开关 -->
-			<image v-for="(item, index) in switchsList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'Switchon.png' : 'Switchoff.png')" @tap="changeSwitchs(index)" :style="{order: 100 - index, width: switchWidth, height: switchWidth}" class="switch-img"></image>
-		</view>
-		<view class="img-socket" v-else>
-			<!-- 插座2 -->
-			<image v-for="(item, index) in socketList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'socketon.png' : 'socketoff.png')" @tap="changeSocket(index)" :style="{order: 100 - index, width: '25vw', height: '25vw'}" class="switch-img"></image>
+		<view class="swicth-box">
+			<view class="img-infrared" v-if="infraredList.length > 0">
+				<!-- 红外 -->
+				<image v-for="(item, index) in infraredList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'infrared.png' : 'infraredoff.png')" @tap="changeInfrared(index)" :style="{width: '15vw', height: '10vw'}" class="infrared-img"></image>
+			</view>
+			<view class="img-scene" v-if="screenList.length > 0">
+				<!-- 场景 -->
+				<image v-for="(item, index) in screenList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @tap="changeScene(index)" :style="{width: '25vw', height: '25vw'}" class="switch-img"></image>
+			</view>
+			<view class="img-box" v-if="switchsList.length > 0">
+				<!-- 开关 -->
+				<image v-for="(item, index) in switchsList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'Switchon.png' : 'Switchoff.png')" @tap="changeSwitchs(index)" :style="{order: 100 - index, width: switchWidth, height: switchWidth}" class="switch-img"></image>
+			</view>
+			<view class="img-socket" v-if="socketList.length > 0">
+				<!-- 插座2 -->
+				<image v-for="(item, index) in socketList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'socketon.png' : 'socketoff.png')" @tap="changeSocket(index)" :style="{order: 100 - index, width: '25vw', height: '25vw'}" class="switch-img"></image>
+			</view>
+			<view class="img-curtain" v-if="curtainList.length > 0">
+				<!-- 窗帘控制面板 -->
+				<view class="img-curtain-item" v-for="(item, index) in curtainList" :key="index">
+					<image  :src="'/static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @tap="changeCurtain(index)" :style="{width: '25vw', height: '25vw'}" class="curtain-img"></image>
+					<text>{{['打开','停止','关闭'][index % 3]}}</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -34,6 +43,7 @@
 				screenList: [], //场景列表
 				infraredList: [],//红外场景 
 				switchsList: [],//按钮
+				curtainList: [], //窗帘控制面板
 				switchWidth: '25vw',
 				status: [false,false,false],
 				lock: false,
@@ -71,6 +81,15 @@
 				const tarArr = Object.assign([],this.socketList, {[index]: !this.socketList[index]})
 				this.settingStatus(this.dealSocket(tarArr), () => {
 					// this.socketList = tarArr
+				})
+			},
+			changeCurtain(index) {
+				const tarNum = ('0'+ Math.pow(2,index).toString(16)).slice(-2) + '00000000000000';
+				this.settingStatus(tarNum , () => {
+					this.curtainList = Object.assign([],this.curtainList,{[index]: true})
+					setTimeout(() => {
+						this.curtainList = Object.assign([],this.curtainList,{[index]: false})
+					},1000)
 				})
 			},
 			dealSwitchs(tarArr,sceneNum){//处理开关状态status
@@ -139,6 +158,7 @@
 			}
 		},
 		onLoad(option){
+			// option.curtainNum = 2
 			console.log('option',option)
 			this.serialId = option.serialId;
 			if(option.title) this.title = option.title
@@ -171,6 +191,9 @@
 				this.switchsList = switchsList
 				this.switchWidth = switchsList.length > 3 ? '20vw' : Math.floor(80 / switchsList.length) + 'vw'
 			}
+			if(option.curtainNum) { //处理插座，插座是单独使用的
+				this.curtainList = new Array(option.curtainNum * 3).fill(false)
+			}
 		}
 	}
 </script>
@@ -185,7 +208,7 @@
 	background: #0fafff;
 }
 .img-box {
-	flex: 3 1;
+	/* flex: 3 1; */
 	display: flex;
 	justify-content: space-around;
 	width: 94%;
@@ -199,21 +222,46 @@
 	flex-wrap: wrap;
 	align-content:flex-start;
 }
+.img-curtain {
+	display: flex;
+	justify-content: space-around;
+	width: 94%;
+	flex-wrap: wrap;
+	align-content:flex-start;
+}
+.img-curtain-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: #fff;
+	margin-bottom: 20px;
+}
+.curtain-img {
+	margin:0;
+}
 .switch-img {
 	margin: 20px 0;
 }
 .img-infrared {
-	flex: 1 1;
+	/* flex: 1 1; */
 	display: flex;
 	align-items:flex-end;
 	margin-bottom: 15px;
 }
 .img-socket {
-	flex: 3 1;
+	/* flex: 3 1; */
 	display: flex;
 	justify-content: space-around;
 	width: 94%;
 	flex-wrap: wrap;
 	align-content:end;
+}
+.swicth-box {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
 }
 </style>

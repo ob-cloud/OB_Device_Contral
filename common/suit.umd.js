@@ -875,10 +875,14 @@
       if (!deviceSubType) return SuitStatus[this.__getStatusKey(deviceType, status.slice(8, 10))]; // cardSenseSensor
 
       if (TypeHints$1.isCardSenseSensors(deviceSubType)) return SuitStatus[this.__getStatusKey(deviceType, status.slice(0, 2))]; // acdcman(红外+光感)
-      // if (TypeHints.isAcdcmanSensors(deviceSubType)) return SuitStatus[this.__getStatusSubKey(deviceType, deviceSubType, status.slice(2, 4))]
-      // ac红外
+
+      if (TypeHints$1.isAcdcmanSensors(deviceSubType)) {
+        const strengthNum = status.slice(6, 8);
+        return `${SuitStatus[this.__getStatusSubKey(deviceType, deviceSubType, status.slice(2, 4))]}-亮度:${strengthNum === '05' ? '100%' : strengthNum === '03' ? '50%' : '0%'}`;
+      } // ac红外
       // if (TypeHints.isAcSensors(deviceSubType)) return SuitStatus[this.__getStatusSubKey(deviceType, deviceSubType, status.slice(2, 4))]
       //humidifier
+
 
       if (TypeHints$1.isHumidifierSensors(deviceSubType)) {
         const tempNum = status.slice(2, 4);
