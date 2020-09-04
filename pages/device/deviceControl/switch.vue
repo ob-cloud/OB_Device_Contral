@@ -8,20 +8,20 @@
 			</view>
 			<view class="img-scene" v-if="screenList.length > 0">
 				<!-- 场景 -->
-				<image v-for="(item, index) in screenList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @tap="changeScene(index)" :style="{width: '25vw', height: '25vw'}" class="switch-img"></image>
+				<image v-for="(item, index) in screenList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @tap="changeScene(index)" class="switch-img" :class="{'four-items': screenList.length === 4 }"></image>
 			</view>
 			<view class="img-box" v-if="switchsList.length > 0">
 				<!-- 开关 -->
-				<image v-for="(item, index) in switchsList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'Switchon.png' : 'Switchoff.png')" @tap="changeSwitchs(index)" :style="{order: 100 - index, width: switchWidth, height: switchWidth}" class="switch-img"></image>
+				<image v-for="(item, index) in switchsList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'Switchon.png' : 'Switchoff.png')" @tap="changeSwitchs(index)" :style="{order: 100 - index}" class="switch-img"  :class="{'four-items': switchsList.length === 4 }"></image>
 			</view>
 			<view class="img-socket" v-if="socketList.length > 0">
 				<!-- 插座2 -->
-				<image v-for="(item, index) in socketList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'socketon.png' : 'socketoff.png')" @tap="changeSocket(index)" :style="{order: 100 - index, width: '25vw', height: '25vw'}" class="switch-img"></image>
+				<image v-for="(item, index) in socketList" :key="index" :src="'/static/img/deviceImg/' + (item ? 'socketon.png' : 'socketoff.png')" @tap="changeSocket(index)" :style="{order: 100 - index}" class="switch-img" :class="{'four-items': socketList.length === 4 }"></image>
 			</view>
 			<view class="img-curtain" v-if="curtainList.length > 0">
 				<!-- 窗帘控制面板 -->
 				<view class="img-curtain-item" v-for="(item, index) in curtainList" :key="index">
-					<image  :src="'/static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @tap="changeCurtain(index)" :style="{width: '25vw', height: '25vw'}" class="curtain-img"></image>
+					<image  :src="'/static/img/deviceImg/' + (item ? 'sceneon.png' : 'sceneoff.png')" @tap="changeCurtain(index)" class="curtain-img"></image>
 					<text>{{['打开','停止','关闭'][index % 3]}}</text>
 				</view>
 			</view>
@@ -238,9 +238,16 @@
 }
 .curtain-img {
 	margin:0;
+	width: 25vw;
+	height: 25vw;
 }
 .switch-img {
 	margin: 20px 0;
+	width: 25vw;
+	height: 25vw;
+}
+.four-items {
+	margin: 20px 10vw;
 }
 .img-infrared {
 	/* flex: 1 1; */

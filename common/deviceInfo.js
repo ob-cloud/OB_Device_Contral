@@ -352,7 +352,9 @@ export const deviceInfo = [{
 		id: 2,
 		name: '投影仪幕布',
 		show: true,
-		image: 'mubu_home'
+		image: 'curtain_home',
+		path: '/pages/device/deviceControl/curtains',
+		params: {}
 	}, ]
 }, {
 	id: 6,
