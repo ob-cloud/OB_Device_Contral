@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App'
 // import api from './api' // 导入api接口
 // Vue.prototype.$api = api; // 将api挂载到vue的原型上
+import share from '@/static/js/share.js'
+
+Vue.mixin(share)
 
 import store from './store'
 

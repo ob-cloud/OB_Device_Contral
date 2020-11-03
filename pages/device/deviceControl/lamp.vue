@@ -29,7 +29,9 @@
 				isOpen: false,
 				coldNum: 0,
 				haveCold: false,
-				serialId: ''
+				serialId: '',
+				timer: null,
+				controlNum: 0
 			}
 		},
 		methods: {
@@ -47,6 +49,7 @@
 			},
 			ReverseLamp() {
 				let num = (this.isOpen ? '00' : 'ff')
+				this.isOpen = !this.isOpen;
 				if(this.haveCold) {
 					num += ( this.dealColdNum() + 'ff0000000200')
 				} else {
@@ -55,24 +58,32 @@
 				this.changeNodes(num)
 			},
 			changeNodes(status,fn){
-				uni.showLoading({
-				    title: '命令发送中',
-					mask: true
-				})
+				// uni.showLoading({
+				//     title: '命令发送中',
+				// 	mask: true
+				// })
+				this.controlNum += 1;
 				settingNodeStatus(this.serialId, status).then(res => {
 					fn && fn()
-					setTimeout(() => {
-						this.getRealStatus()
-					}, 800)
+					this.checkStatus(this.controlNum);
 				}).catch(err => {
 					uni.hideLoading()
 					console.log('err',err)
 				})
 			},
-			getRealStatus(){
+			checkStatus(num){
+				if(this.timer) {
+					clearTimeout(this.timer);	
+				};
+				this.timer =  setTimeout(() => {
+						this.getRealStatus(num)
+						this.timer = null;
+				}, 1000)
+			},
+			getRealStatus(num){
 				queryNodeRealStatus(this.serialId).then(res => {
 					uni.hideLoading()
-					if(res.data && res.data.status) {
+					if(res.data && res.data.status && this.controlNum === num) {
 						// 单色灯第一位
 						let switchsArr = parseInt(res.data.status.slice(0,2),16)
 						if(switchsArr > 0) {
